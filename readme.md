@@ -50,6 +50,13 @@ I will use the following:
     [C Clustering Library][7] (PDF).
   - Possibly [Numpy][8], [SciPy][10] and [MatPlotLib][9]
   
+## Relavent Papers
+
+(Just for starters)
+
+  -  A k-means clustering algorithm, JA Hartigan, MA Wong - JR Stat. Soc., Ser. C, 1979
+  - 
+  
 [1]: http://en.wikipedia.org/wiki/K-means_clustering
 [2]: http://en.wikipedia.org/wiki/Hierarchical_clustering
 [3]: http://en.wikipedia.org/wiki/Expectation-maximization_algorithm
