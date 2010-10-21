@@ -2,7 +2,7 @@
 
 [Austin G. Davis-Richardson](harekrishna@gmail.com)  
 
-Quantitative Ontologies -> Biologically Interesting Inferences
+Biologically Interesting Inferences for Quantitative Ontologies 
 
 ## Goal
 
@@ -13,6 +13,7 @@ the SEED database into ontology subsystem trees.
 ## Distance Metric
 
   - Δreads
+  - _p_-Value
   - distance in subsystem tree (if possible)
   - and both: Δreads * tree distance
 
@@ -52,10 +53,16 @@ I will use the following:
   
 ## Relavent Papers
 
-(Just for starters)
+Just for starters...
 
-  -  A k-means clustering algorithm, JA Hartigan, MA Wong - JR Stat. Soc., Ser. C, 1979
-  - 
+  - Hartigan, J. A.; Wong, M. A. (1979). "Algorithm AS 136: A K-Means
+    Clustering Algorithm". Journal of the Royal Statistical Society
+  - Ward, Joe H. (1963). "Hierarchical Grouping to Optimize an Objective
+    Function". Journal of the American Statistical Association
+  - Jain, MN Murty, PJ Flynn (1999). "Data clustering: a review". ACM
+    computing surveys
+  - Moon, T.K. (1996). "The Expectation Clustering Algorithm". Signal
+    Processing Magazine, IEEE    
   
 [1]: http://en.wikipedia.org/wiki/K-means_clustering
 [2]: http://en.wikipedia.org/wiki/Hierarchical_clustering
