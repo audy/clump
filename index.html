@@ -1,1 +1,93 @@
-Clump
+<html>
+  <head>  
+    <title>Clump</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+      html {
+        
+        background: #00C8D7;
+        background-image: url('bg.png');
+        
+      }
+      body {
+        width: 620px;
+        margin: 0 auto;
+        font-family: "Georgia";
+        background: #fff;
+        padding: 20px;
+        border-right: 6px solid #547272;
+        border-left: 6px solid #547272;
+      }
+      h1 { 
+        font-size: 90px;
+        margin: 0;
+        letter-spacing: -.15em; 
+        text-shadow: #a0a 0px 0px 10px;
+      }
+      h1, h2 { font-family: "Futura"; }
+      h2 { color: #444; font-weight: 100; }
+      a { color: #a0a; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    
+    <h1 id="clump">Clump</h1>
+
+    <p><a href="harekrishna@gmail.com">Austin G. Davis-Richardson</a>  </p>
+
+    <p>Quantitative Ontologies are Biologically Interesting Inferences</p>
+
+    <h2 id="goal">Goal</h2>
+
+    <p>To investigate the usefulness of various clustering algorithms and distance
+    metrics on a dataset made from Illumina sequencing reads and classified with
+    the SEED database into ontology subsystem trees.</p>
+
+    <h2 id="distance_metric">Distance Metric</h2>
+
+    <ul>
+    <li>Δreads</li>
+    <li>distance in subsystem tree (if possible)</li>
+    <li>and both: Δreads * tree distance</li>
+    </ul>
+
+    <h2 id="clustering_algorithms">Clustering Algorithms</h2>
+
+    <p>I plan on implementing the following:</p>
+
+    <ul>
+    <li><a href="http://en.wikipedia.org/wiki/K-means_clustering">k-Means Clustering</a></li>
+    <li><a href="http://en.wikipedia.org/wiki/Hierarchical_clustering">Hierarchical Clustering</a></li>
+    <li><a href="http://en.wikipedia.org/wiki/Expectation-maximization_algorithm">Expectation Maximization</a></li>
+    </ul>
+
+    <h2 id="dataset">Dataset</h2>
+
+    <p>I have a dataset that looks like this:</p>
+
+    <pre><code>
+    # 1 i+1 ..  n   Ontology
+    100 20  ..  90  System
+    50  10  ..  30  System; Subsystem 1
+    50  10  ..  60  System; Subsystem 2
+    25  1   ..  50  System; Subsystem 2; Subsubsystem 1
+    25  9   ..  10  System; Subsystem 2; Subsubsystem 2
+    </code></pre>
+
+    <p>The numbers are read counts similar to expression data on a microarray,
+    notice they add up. Subsystems are generated from the
+    <a href="http://www.theseed.org">SEED</a> database using tools created prior to this project.</p>
+
+    <h2 id="methods">Methods</h2>
+
+    <p>I will use the following:</p>
+
+    <ul>
+    <li><a href="http://www.python.org">Python</a></li>
+    <li><a href="http://pypi.python.org/pypi/Pycluster">PyCluster</a> which is a python wrapper for the
+    <a href="http://bonsai.hgc.jp/~mdehoon/software/cluster/cluster.pdf">C Clustering Library</a> (PDF).</li>
+    <li>Possibly <a href="http://numpy.scipy.org">Numpy</a>, <a href="http://www.scipy.org">SciPy</a> and <a href="http://matplotlib.sourceforge.net/">MatPlotLib</a></li>
+    </ul>
+
+  </body>
+</html>
