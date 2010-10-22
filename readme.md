@@ -1,5 +1,8 @@
 # Clump
 
+The term Clump is derived from the latin _clumpus_ which means to shake ones
+belly fat in an amusing way after finding treasure.
+
 [Austin G. Davis-Richardson](harekrishna@gmail.com)  
 
 Biologically Interesting Inferences for Quantitative Ontologies 
