@@ -1,17 +1,21 @@
 # Clump
 
-The term Clump is derived from the latin _clumpus_ which means to shake ones
-belly fat in an amusing way after finding treasure.
+Clump is a term derived from the latin _clumpus_ which means to shake one's
+belly fat in an amusing way before finding treasure.
 
 [Austin G. Davis-Richardson](harekrishna@gmail.com)  
-
-Biologically Interesting Inferences for Quantitative Ontologies 
 
 ## Goal
 
 To investigate the usefulness of various clustering algorithms and distance
-metrics on a dataset made from Illumina sequencing reads and classified with
-the SEED database into ontology subsystem trees.
+metrics on a dataset made from Illumina sequencing reads and classified with the SEED database into ontology subsystem trees.
+
+By usefulness I mean producing biologically interesting results. The output
+will be either a list of and possibly a graphical representation of the gene
+clusters that co-vary.
+
+The dataset I'm using was generated from Illumina sequencing of bacterial DNA
+in human stool samples.
 
 ## Distance Metric
 
