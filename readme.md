@@ -10,31 +10,44 @@ belly fat in an amusing way before finding treasure.
 To investigate the usefulness of various clustering algorithms and distance
 metrics on a dataset made from Illumina sequencing reads and classified with the SEED database into ontology subsystem trees.
 
-By usefulness I mean producing biologically interesting results. The output
-will be either a list of and possibly a graphical representation of the gene
-clusters that co-vary.
+## Description of Ontology classification Pipeline
 
-The dataset I'm using was generated from Illumina sequencing of bacterial DNA
-in human stool samples.
+Unpublished, so I can't talk about it yet. In a nutshell, genes are found and classified from Illumina pyrosequencing reads taken from human stool samples. Gene annotation is based on similiarity to [The SEED Database][4].
 
-## Distance Metric
+## Requirements
 
-  - Δreads
-  - _p_-Value
-  - distance in subsystem tree (if possible)
-  - and both: Δreads * tree distance
+To run these scripts you need:
 
-## Clustering Algorithms
+   - [MatPlotLib][9]
+   - [Numerical Python][8]
+   - [Scientific Python][10]
+   - [PyCluster][6]
 
-I plan on implementing the following:
+Getting all of these packages installed on your system can be tricky. I recommend first installing [Python 2.6.6][5] from source into your `/usr/local/bin` directory and setting your environment variable `PYTHONPATH` to `/usr/local/lib/python2.6/`. Then, download and install all of the above packages from source (do not use the installers). My success using this method varied even on systems with the same OS and compiler versions.
 
-  - [k-Means Clustering][1]
-  - [Hierarchical Clustering][2]
-  - [Expectation Maximization][3]
+If I find my methods to be useful, I may release this project in the form of a VirtualBox image to make things easier.
+
+## Clustering
+
+I am testing the algorithms available in PyCluster, which is a python wrapper for the C clustering library.
+
+### Distance Computation
+
+  - Unweighted (Absolute) Pearson Correlation
+  - Uncentered Pearson Correlation
+  - Kendall's Tau
+  - Euclidean Distance
+
+### Clustering Algorithms
+
+   - Hierarchical clustering
+   - _k_-means clustering
+   - Principal Component Analysis
 
 ## Dataset
 
-I have a dataset that looks like this:
+These scripts take a dataset that looks like this:
+If there is a `#` present in the system annotation, the gene counts are overlooked.
 
     # 1	i+1	..	n	Ontology
     100	20	..	90	System
@@ -46,17 +59,6 @@ I have a dataset that looks like this:
 (The numbers are read counts similar to expression data on a microarray,
 notice they add up)
 
-Subsystems are generated from the [SEED][4] database
-using tools created prior to this project.
-
-## Methods
-
-I will use the following:
-
-  - [Python][5]
-  - [PyCluster][6] which is a python wrapper for the
-    [C Clustering Library][7] (PDF).
-  - Possibly [Numpy][8], [SciPy][10] and [MatPlotLib][9]
   
 ## Relavent Papers
 

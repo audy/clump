@@ -2,6 +2,7 @@
 
 import sys
 from Pycluster import *
+from collections import defaultdict
 
 def main():
     """docstring for main"""
@@ -9,7 +10,7 @@ def main():
     filename = sys.argv[1]
     
     # Load tables
-    data = []
+    data = {}
     
     with open(filename) as handle:
         for line in handle:
@@ -18,17 +19,26 @@ def main():
                 
             line = line.strip().split(',')
             values = line[:-1]
-            data.append([ int(i) for i in values])
+            gene = line[-1]
+            if '#' in gene: continue
+            if gene.count(';') > 0: continue
+            data[gene] = [ int(i) for i in values ]
             
-    clusterid, error, nfound = kcluster(data, nclusters=5, mask=None,
-        weight=None, transpose=0, npass=1, method='a', dist='k',
+    clusterid, error, nfound = kcluster(data.values(), nclusters=5, mask=None,
+        weight=None, transpose=0, npass=10000, method='a', dist='a',
         initialid=None)
         
-    # An array containing the number of the cluster to which each
-    # gene/microarray was assigned.
+    # Print output so that it makes sense
     
+    clusters = defaultdict(list)
     
-    print clusterid, error, nfound
+    for i, j in zip(clusterid, data):
+        clusters[i].append(j)
+        
+    for i in clusters:
+        print 'Cluster %s:' % i
+        for j in clusters[i]:
+            print '    %s' % (j)
     
     
 
