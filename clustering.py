@@ -34,7 +34,7 @@ def main():
     flat_data = {}
     for k in data:
         i = data[k]
-        flat_data[k] = [sum(i['cases']), sum(i['controls'])]
+        flat_data[k] = [sum(i['cases'])/4.0, sum(i['controls'])/4.0]
 
     print 'clustering'
     clusterid, error, nfound = kcluster(
@@ -43,8 +43,8 @@ def main():
                         mask=None,
                         weight=None,
                         transpose=0,
-                        npass=1,
-                        method='a',
+                        npass=100,
+                        method='m',
                         dist='e',
                         initialid=None)
                                     
@@ -57,8 +57,8 @@ def main():
     # Print output so that it makes sense
     #print_clusters(clusters)
     
-    lr_plot(clusters, flat_data)
-    plot_clusters(clusters, flat_data)
+    ma_plot(clusters, flat_data)
+    #plot_clusters(clusters, flat_data)
     
     
 def print_clusters(clusters):
@@ -99,22 +99,25 @@ def ma_plot(clusters, flat_data):
     A = .5(log(2)[case] + log(2)[control])
     """
     
+        
+    colors = ['b', 'y', 'g', 'r', 'c']
 
-    vectors = []    
-    fig = figure()
-    ax1 = fig.add_subplot(111)
-
+    vectors = {}
     for c in clusters:
+        color = colors[c]
+        vectors[color] = []
         for g in clusters[c]:
             v = (flat_data[g][0]+1, flat_data[g][1]+1)
             x = math.log(v[0], 2) - math.log(v[1], 2)
             y = (0.5)*(math.log(v[0], 2) + math.log(v[1], 2))
-            vectors.append((x, y))
-            
-    plt.scatter([v[0] for v in vectors], [v[1] for v in vectors],
-        s=20, color='r', marker='s')
-        
+            vectors[color].append((x, y))
+
+        plt.scatter([v[0] for v in vectors[color]],
+                    [v[1] for v in vectors[color]],
+                    s=20, color=color, marker='s')  
+
     show()
+        
 
 def plot_clusters(clusters, flat_data):
     """ plots clustering output """
@@ -135,7 +138,7 @@ def plot_clusters(clusters, flat_data):
             vectors[color].append(v)
             
         plt.scatter([v[0] for v in vectors[color]], 
-            [v[1] for v in vectors[color]], s=50, c=color, marker='s')    
+            [v[1] for v in vectors[color]], s=40, c=color, marker='s')    
     
     show()
     
@@ -151,7 +154,7 @@ def load_table(handle):
         values = line[:-1]
         gene = line[-1]
         if '#' in gene: continue
-        #if gene.count(';') != 3: continue
+        if gene.count(';') > 0: continue
         gene = gene.split(',')[-1]
         
         # Let's try relative "expresion" levels
