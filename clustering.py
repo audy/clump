@@ -39,7 +39,7 @@ def main():
     print 'clustering'
     clusterid, error, nfound = kcluster(
                         flat_data.values(),
-                        nclusters=5,
+                        nclusters=2,
                         mask=None,
                         weight=None,
                         transpose=0,
