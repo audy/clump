@@ -51,8 +51,13 @@ def main():
     clusters = defaultdict(list)
     for i, j in zip(clusterid, data):
         clusters[i].append(j)
+        
+    make_plots("k-Means", clusterid, flat_data)
     
-    # Hierarchical clustering
+
+
+def hierarchical_clustering(flat_data, data):
+    """ Hierarchical clustering """
     tree = pc.treecluster(data=flat_data.values(),
                        mask=None,
                        weight=None,
@@ -63,27 +68,30 @@ def main():
                        
     for i in tree:
         print '%4s %4s   %2.2e' % (i.left, i.right, i.distance)
-    
+
+    return tree    
+            
+def self_organizing_map(flat_data, data):
+    """ """
     # Self-organizing maps
     clusterid, celldata = pc.somcluster(
                         data=flat_data.values(),
                         transpose=0,
-                        nxgrid=20,
-                        nygrid=20,
+                        nxgrid=5,
+                        nygrid=5,
                         inittau=0.02,
                         niter=100,
                         dist='e')
                         
     # load clusters into dictionary
     clusters = defaultdict(list)
-    print clusterid
-    return
     for i, j in zip(clusterid, data):
         clusters[tuple(i)].append(j)
     
     make_plots('SOM (c=%s, m=%s, d=%s)' % (nclusters, method, distance),
                    clusters, flat_data)
-    
+                   
+                       
 def make_plots(title, nclusters, flat_data):
     """ Makes your plots """
     
