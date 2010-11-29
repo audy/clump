@@ -73,119 +73,102 @@
       <a href="http://www.github.com/audy/clump" rel="me">Fork me on GitHub</a>
     </div>
     <div id="container">
-      <h1 id="clump">
-        Clump
-      </h1>
-      <p>
-        <a href="harekrishna@gmail.com">Austin G. Davis-Richardson</a>
-      </p>
-      <p>
-        <blockquote>Clump is a term derived from the latin <em>clumpus</em>
-        which means to shake one's belly fat in an amusing way before
-        finding treasure.</blockquote>
-        
-        
+		<h1 id="clump">Clump</h1>
 
-      </p>
-      <h2 id="goal">
-        Goal
-      </h2>
-      <p>
-        To investigate the usefulness of various clustering algorithms and
-        distance metrics on a dataset made from Illumina sequencing reads and
-        classified with the SEED database into ontology subsystem trees.
-        </p><p>
-        By usefulness I mean producing biologically interesting results.
-        The output will be either a list of and/or graphical representation
-        of the gene clusters that co-vary. 
-      </p>
-      <p>The dataset I'm using was generated from Illumina sequencing of 
-        bacterial DNA in human stool samples.
-      </p>
-      <h2 id="distance_metric">
-        Distance Metric
-      </h2>
-      <ul>
-        <li>Δreads
-        </li>
-        <li>
-          <em>p</em>-Value
-        </li>
-        <li>distance in subsystem tree (if possible)
-        </li>
-        <li>and both: Δreads * tree distance
-        </li>
-      </ul>
-      <h2 id="clustering_algorithms">
-        Clustering Algorithms
-      </h2>
-      <p>
-        I plan on implementing the following:
-      </p>
-      <ul>
-        <li>
-          <a href="http://en.wikipedia.org/wiki/K-means_clustering">k-Means Clustering</a>
-        </li>
-        <li>
-          <a href="http://en.wikipedia.org/wiki/Hierarchical_clustering">Hierarchical Clustering</a>
-        </li>
-        <li>
-          <a href="http://en.wikipedia.org/wiki/Expectation-maximization_algorithm">Expectation Maximization</a>
-        </li>
-      </ul>
-      <h2 id="dataset">
-        Dataset
-      </h2>
-      <p>
-        I have a dataset that looks like this:
-      </p>
-      <pre>
-<code># 1 i+1 ..  n   Ontology
-100 20  ..  90  System
-50  10  ..  30  System; Subsystem 1
-50  10  ..  60  System; Subsystem 2
-25  1   ..  50  System; Subsystem 2; Subsubsystem 1
-25  9   ..  10  System; Subsystem 2; Subsubsystem 2
-</code>
-</pre>
-      <p>
-        (The numbers are read counts similar to expression data on a microarray, notice they add up)
-      </p>
-      <p>
-        Subsystems are generated from the <a href="http://www.theseed.org">SEED</a> database using tools created prior to this project.
-      </p>
-      <h2 id="methods">
-        Methods
-      </h2>
-      <p>
-        I will use the following:
-      </p>
-      <ul>
-        <li>
-          <a href="http://www.python.org">Python</a>
-        </li>
-        <li>
-          <a href="http://pypi.python.org/pypi/Pycluster">PyCluster</a> which is a python wrapper for the <a href="http://bonsai.hgc.jp/~mdehoon/software/cluster/cluster.pdf">C Clustering Library</a> (PDF).
-        </li>
-        <li>Possibly <a href="http://numpy.scipy.org">Numpy</a>, <a href="http://www.scipy.org">SciPy</a> and <a href="http://matplotlib.sourceforge.net/">MatPlotLib</a>
-        </li>
-      </ul>
-      <h2 id="relevant_papers">
-        Relevant Papers
-      </h2>
-      <p>
-        Just for starters…
-      </p>
-      <ul>
-        <li>Hartigan, J. A.; Wong, M. A. (1979). “Algorithm AS 136: A K-Means Clustering Algorithm”. Journal of the Royal Statistical Society
-        </li>
-        <li>Ward, Joe H. (1963). “Hierarchical Grouping to Optimize an Objective Function”. Journal of the American Statistical Association
-        </li>
-        <li>Jain, MN Murty, PJ Flynn (1999). “Data clustering: a review”. ACM computing surveys
-        </li>
-        <li>Moon, T.K. (1996). “The Expectation Clustering Algorithm”. Signal Processing Magazine, IEEE
-        </li>
-      </ul>
+		<p>Clump is a term derived from the latin <em>clumpus</em> which means to shake one&#8217;s
+		belly fat in an amusing way before finding treasure.</p>
+
+		<p><a href="harekrishna@gmail.com">Austin G. Davis-Richardson</a>  </p>
+
+		<h2 id="goal">Goal</h2>
+
+		<p>To investigate the usefulness of various clustering algorithms and distance
+		metrics on a dataset made from Illumina sequencing reads and classified with the SEED database into ontology subsystem trees.</p>
+
+		<h2 id="generating_dataset">Generating Dataset</h2>
+
+		<p>Unpublished, so I can&#8217;t talk about it yet. In a nutshell, genes are found and classified from Illumina pyrosequencing reads taken from human stool samples. Gene annotation is based on similiarity to <a href="http://www.theseed.org">The SEED Database</a>.</p>
+
+		<h2 id="requirements">Requirements</h2>
+
+		<p>To run these scripts you need:</p>
+
+		<ul>
+		<li><a href="http://matplotlib.sourceforge.net/">MatPlotLib</a></li>
+		<li><a href="http://numpy.scipy.org">Numerical Python</a></li>
+		<li><a href="http://www.scipy.org">Scientific Python</a></li>
+		<li><a href="http://pypi.python.org/pypi/Pycluster">PyCluster</a></li>
+		</ul>
+
+		<p>Getting all of these packages installed on your system can be tricky. I recommend first installing <a href="http://www.python.org">Python 2.6.6</a> from source into your <code>/usr/local/bin</code> directory and setting your environment variable <code>PYTHONPATH</code> to <code>/usr/local/lib/python2.6/</code>. Then, download and install all of the above packages from source (do not use the installers). My success using this method varied even on systems with the same OS and compiler versions.</p>
+
+		<p>If I find my methods to be useful, I may release this project in the form of a VirtualBox image to make things easier.</p>
+
+		<h2 id="clustering">Clustering</h2>
+
+		<p>I am testing the algorithms available in PyCluster, which is a python wrapper for the C clustering library.</p>
+
+		<h3 id="distance_computation">Distance Computation</h3>
+
+		<ul>
+		<li>Pearson Correlation</li>
+		<li>Absolute Pearson Correlation</li>
+		<li>Uncentered Pearson Correlation</li>
+		<li>Absolute uncentered Pearson Correlation</li>
+		<li>Spearman&#8217;s Rank Correlation</li>
+		<li>Kendall&#8217;s T</li>
+		<li>Euclidean distance</li>
+		<li>City-block distance</li>
+		</ul>
+
+		<h3 id="clustering_algorithms">Clustering Algorithms</h3>
+
+		<ul>
+		<li>Hierarchical clustering</li>
+		<li><em>k</em>-means clustering</li>
+		<li>Self-organizing maps*</li>
+		<li><p>Principal Component Analysis*</p></li>
+		<li><p><em>incomplete</em></p></li>
+		</ul>
+
+		<h2 id="graphing">Graphing</h2>
+
+		<ul>
+		<li>Log ratio</li>
+		<li>MA graph</li>
+		<li>y = cases, x = controls (plain, linear)</li>
+		</ul>
+
+		<h2 id="dataset">Dataset</h2>
+
+		<p>These scripts take a dataset that looks like this:
+		If there is a <code>#</code> present in the system annotation, the gene counts are overlooked.</p>
+
+		<pre><code># 1 i+1 ..  n   Ontology
+		100 20  ..  90  System
+		50  10  ..  30  System; Subsystem 1
+		50  10  ..  60  System; Subsystem 2
+		25  1   ..  50  System; Subsystem 2; Subsubsystem 1
+		25  9   ..  10  System; Subsystem 2; Subsubsystem 2
+		</code></pre>
+
+		<p>(The numbers are read counts similar to expression data on a microarray,
+		notice they add up)</p>
+
+		<h2 id="relavent_papers">Relavent Papers</h2>
+
+		<p>Just for starters&#8230;</p>
+
+		<ul>
+		<li>Hartigan, J. A.; Wong, M. A. (1979). &#8220;Algorithm AS 136: A K-Means
+		Clustering Algorithm&#8221;. Journal of the Royal Statistical Society</li>
+		<li>Ward, Joe H. (1963). &#8220;Hierarchical Grouping to Optimize an Objective
+		Function&#8221;. Journal of the American Statistical Association</li>
+		<li>Jain, MN Murty, PJ Flynn (1999). &#8220;Data clustering: a review&#8221;. ACM
+		computing surveys</li>
+		<li>Moon, T.K. (1996). &#8220;The Expectation Clustering Algorithm&#8221;. Signal
+		Processing Magazine, IEEE    </li>
+		</ul>
     </div>
   </body>
 </html>
