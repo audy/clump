@@ -15,7 +15,7 @@ def main():
     
     # Load tables
     with open(filename) as handle:
-        data = load_table(handle)
+        data, flat_data = load_table(handle)
         
     distance_functions = {
         'Pearson Correlation': 'c',
@@ -28,14 +28,19 @@ def main():
         'City-block distance': 'b',
     }
     
-    # We only want to consider {cases} versus {controls}
-    flat_data = {}
-    for k in data:
-        i = data[k]
-        flat_data[k] = [sum(i['cases'])/4.0, sum(i['controls'])/4.0]
-
-    # K-Means clustering
-    nclusters, method, distance = 5, 'a', 'a'
+    nclusters, method, distance = 5, 'a', 'b'
+    
+    clusters = k_means(flat_data, data, nclusters, method, distance)
+    make_plots('k-means: n=%s, m=%s, d=%s' % \
+        (nclusters, method, distance), clusters, flat_data)
+    
+    hierarchical(flat_data, data, nclusters, method, distance)
+    make_plots('hierarchical: n=%s, m=%s, d=%s' % \
+        (nclusters, method, distance), clusters, flat_data)
+    
+    
+def k_means(flat_data, data, nclusters, method, distance):
+    """ K-Means Clustering """
     clusterid, error, nfound = pc.kcluster(
                         flat_data.values(),
                         nclusters=nclusters,
@@ -52,24 +57,31 @@ def main():
     for i, j in zip(clusterid, data):
         clusters[i].append(j)
         
-    make_plots("k-Means", clusterid, flat_data)
-    
+    return clusters
 
 
-def hierarchical_clustering(flat_data, data):
+def hierarchical(flat_data, data, nclusters, method, distance):
     """ Hierarchical clustering """
+    
     tree = pc.treecluster(data=flat_data.values(),
                        mask=None,
                        weight=None,
                        transpose=0,
-                       method='m',
-                       dist='e',
+                       method=method,
+                       dist=distance,
                        distancematrix=None)
                        
-    for i in tree:
-        print '%4s %4s   %2.2e' % (i.left, i.right, i.distance)
+    #for i in tree:
+    #    print '%4s %4s   %2.2e' % (i.left, i.right, i.distance)
+        
+    clusterid = tree.cut(nclusters)
 
-    return tree    
+    clusters = defaultdict(list)
+    for i, j in zip(clusterid, data):
+        clusters[i].append(j)
+        
+    return clusters
+    
             
 def self_organizing_map(flat_data, data):
     """ """
@@ -209,8 +221,14 @@ def load_table(handle):
         
         data[gene] = { 'cases': [int(i) for i in values[4:]],
                        'controls': [int(i) for i in values[:4]] }
+                       
+    # We only want to consider {cases} versus {controls}
+    flat_data = {}
+    for k in data:
+       i = data[k]
+       flat_data[k] = [sum(i['cases'])/4.0, sum(i['controls'])/4.0]
 
-    return data
+    return data, flat_data
 
 def normalize_table(table):
     """ Normalizes you a table by dividing each entry in a column
