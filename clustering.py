@@ -1,9 +1,12 @@
 #!/usr/local/bin/python
 
 import sys
-from Pycluster import *
+import Pycluster as pc
 from pylab import *
 from collections import defaultdict
+
+colors = ['green', 'blue', 'orange', 'cyan',
+            'magenta', 'red', 'yellow', 'pink', 'purple']
 
 def main():
     """docstring for main"""
@@ -14,7 +17,6 @@ def main():
     with open(filename) as handle:
         data = load_table(handle)
         
-    
     distance_functions = {
         'Pearson Correlation': 'c',
         'Absolute Pearson Correlation': 'a',
@@ -26,40 +28,69 @@ def main():
         'City-block distance': 'b',
     }
     
-    algorithms = {
-        '': '',
-    }
-    
     # We only want to consider {cases} versus {controls}
     flat_data = {}
     for k in data:
         i = data[k]
         flat_data[k] = [sum(i['cases'])/4.0, sum(i['controls'])/4.0]
 
-    print 'clustering'
-    clusterid, error, nfound = kcluster(
+    # K-Means clustering
+    nclusters, method, distance = 5, 'a', 'a'
+    clusterid, error, nfound = pc.kcluster(
                         flat_data.values(),
-                        nclusters=2,
+                        nclusters=nclusters,
                         mask=None,
                         weight=None,
                         transpose=0,
                         npass=100,
-                        method='m',
-                        dist='e',
+                        method=method,
+                        dist=distance,
                         initialid=None)
-                                    
-    # Load clusters into dictionary
+    
+    # load clusters into dictionary
     clusters = defaultdict(list)
     for i, j in zip(clusterid, data):
         clusters[i].append(j)
+    
+    # Hierarchical clustering
+    tree = pc.treecluster(data=flat_data.values(),
+                       mask=None,
+                       weight=None,
+                       transpose=0,
+                       method='m',
+                       dist='e',
+                       distancematrix=None)
+                       
+    for i in tree:
+        print '%4s %4s   %2.2e' % (i.left, i.right, i.distance)
+    
+    # Self-organizing maps
+    clusterid, celldata = pc.somcluster(
+                        data=flat_data.values(),
+                        transpose=0,
+                        nxgrid=20,
+                        nygrid=20,
+                        inittau=0.02,
+                        niter=100,
+                        dist='e')
+                        
+    # load clusters into dictionary
+    clusters = defaultdict(list)
+    print clusterid
+    return
+    for i, j in zip(clusterid, data):
+        clusters[tuple(i)].append(j)
+    
+    make_plots('SOM (c=%s, m=%s, d=%s)' % (nclusters, method, distance),
+                   clusters, flat_data)
+    
+def make_plots(title, nclusters, flat_data):
+    """ Makes your plots """
+    
+    ma_plot(title, nclusters, flat_data)
+    plot_clusters(title, nclusters, flat_data)
+    lr_plot(title, nclusters, flat_data)
 
-    
-    # Print output so that it makes sense
-    #print_clusters(clusters)
-    
-    ma_plot(clusters, flat_data)
-    #plot_clusters(clusters, flat_data)
-    
     
 def print_clusters(clusters):
     """ Prints something that makes sense. """
@@ -69,13 +100,15 @@ def print_clusters(clusters):
             print '        %s' % (j)
             
 
-def lr_plot(clusters, flat_data):
+def lr_plot(title, clusters, flat_data):
     """ log(2) ratio plot """
     
     fig = figure()
-    ax1 = fig.add_subplot(111)
+    ax = fig.add_subplot(111)
     
-    colors = ['b', 'y', 'g', 'r', 'c']
+    ax.set_xlabel('log(2)[avg(cases, controls)]')
+    ax.set_ylabel('log(2)[cases]+1/log(2)[controls]+1')
+    ax.set_title(title)
     
     vectors = {}
     for c in clusters:
@@ -84,24 +117,28 @@ def lr_plot(clusters, flat_data):
         for g in clusters[c]:
             v = flat_data[g]
             j = math.log((v[0]+1)/(v[1]+1.0), 2)
-            i = v[0]
+            i = math.log((v[0] + v[1])/2.0, 2)
             vectors[color].append((i, j))
 
         plt.scatter([v[0] for v in vectors[color]], 
-            [v[1] for v in vectors[color]], s=50, c=color, marker='s')    
+            [v[1] for v in vectors[color]], s=50, c=color, alpha=0.5)    
 
     show()
     
 
-def ma_plot(clusters, flat_data):
+def ma_plot(title, clusters, flat_data):
     """ Plots data in an MA plot
     M = log(2)[case] - log(2)[control]
     A = .5(log(2)[case] + log(2)[control])
     """
     
-        
-    colors = ['b', 'y', 'g', 'r', 'c']
-
+    fig = figure()
+    ax = fig.add_subplot(111)
+    
+    ax.set_xlabel('log(2)[cases] - log(2)[controls]')
+    ax.set_ylabel('1/2(log(2)[cases] + log(2)[controls])')
+    ax.set_title(title)
+    
     vectors = {}
     for c in clusters:
         color = colors[c]
@@ -114,18 +151,20 @@ def ma_plot(clusters, flat_data):
 
         plt.scatter([v[0] for v in vectors[color]],
                     [v[1] for v in vectors[color]],
-                    s=20, color=color, marker='s')  
+                    s=50, c=color, alpha=0.5)  
 
     show()
         
 
-def plot_clusters(clusters, flat_data):
+def plot_clusters(title, clusters, flat_data):
     """ plots clustering output """
     
     fig = figure()
-    ax1 = fig.add_subplot(111)
-    
-    colors = ['b', 'y', 'g', 'r', 'c']
+    ax = fig.add_subplot(111)
+
+    ax.set_xlabel('# cases')
+    ax.set_ylabel('# controls')
+    ax.set_title(title)
     
     vectors = {}
     
@@ -138,7 +177,7 @@ def plot_clusters(clusters, flat_data):
             vectors[color].append(v)
             
         plt.scatter([v[0] for v in vectors[color]], 
-            [v[1] for v in vectors[color]], s=40, c=color, marker='s')    
+            [v[1] for v in vectors[color]], s=50, c=color, alpha=0.5)    
     
     show()
     
