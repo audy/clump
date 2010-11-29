@@ -5,8 +5,16 @@ import Pycluster as pc
 from pylab import *
 from collections import defaultdict
 
-colors = ['green', 'blue', 'orange', 'cyan',
-            'magenta', 'red', 'yellow', 'pink', 'purple']
+colors = ('green',
+        'blue',
+        'orange',
+        'cyan',
+        'magenta',
+        'red',
+        'yellow',
+        'pink',
+        'purple',
+        'brown')
 
 def main():
     """docstring for main"""
@@ -28,7 +36,7 @@ def main():
         'City-block distance': 'b',
     }
     
-    nclusters, method, distance = 5, 'a', 'b'
+    nclusters, method, distance = 10, 'm', 'a'
     
     clusters = k_means(flat_data, data, nclusters, method, distance)
     make_plots('k-means: n=%s, m=%s, d=%s' % \
@@ -70,12 +78,9 @@ def hierarchical(flat_data, data, nclusters, method, distance):
                        method=method,
                        dist=distance,
                        distancematrix=None)
-                       
-    #for i in tree:
-    #    print '%4s %4s   %2.2e' % (i.left, i.right, i.distance)
-        
+    
     clusterid = tree.cut(nclusters)
-
+    
     clusters = defaultdict(list)
     for i, j in zip(clusterid, data):
         clusters[i].append(j)
@@ -213,7 +218,7 @@ def load_table(handle):
         values = line[:-1]
         gene = line[-1]
         if '#' in gene: continue
-        if gene.count(';') > 0: continue
+        if gene.count(';') < 4: continue
         gene = gene.split(',')[-1]
         
         # Let's try relative "expresion" levels

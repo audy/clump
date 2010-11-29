@@ -10,7 +10,7 @@ belly fat in an amusing way before finding treasure.
 To investigate the usefulness of various clustering algorithms and distance
 metrics on a dataset made from Illumina sequencing reads and classified with the SEED database into ontology subsystem trees.
 
-## Description of Ontology classification Pipeline
+## Generating Dataset
 
 Unpublished, so I can't talk about it yet. In a nutshell, genes are found and classified from Illumina pyrosequencing reads taken from human stool samples. Gene annotation is based on similiarity to [The SEED Database][4].
 
@@ -33,16 +33,29 @@ I am testing the algorithms available in PyCluster, which is a python wrapper fo
 
 ### Distance Computation
 
-  - Unweighted (Absolute) Pearson Correlation
-  - Uncentered Pearson Correlation
-  - Kendall's Tau
-  - Euclidean Distance
+- Pearson Correlation
+- Absolute Pearson Correlation
+- Uncentered Pearson Correlation
+- Absolute uncentered Pearson Correlation
+- Spearman's Rank Correlation
+- Kendall's T
+- Euclidean distance
+- City-block distance
 
 ### Clustering Algorithms
 
-   - Hierarchical clustering
-   - _k_-means clustering
-   - Principal Component Analysis
+- Hierarchical clustering
+- _k_-means clustering
+- Self-organizing maps*
+- Principal Component Analysis*
+
+* _incomplete_
+
+## Graphing
+
+- Log ratio
+- MA graph
+- y = cases, x = controls (plain, linear)
 
 ## Dataset
 
