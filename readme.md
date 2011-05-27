@@ -10,10 +10,6 @@ belly fat in an amusing way before finding treasure.
 To investigate the usefulness of various clustering algorithms and distance
 metrics on a dataset made from Illumina sequencing reads and classified with the SEED database into ontology subsystem trees.
 
-## Generating Dataset
-
-Unpublished, so I can't talk about it yet. In a nutshell, genes are found and classified from Illumina pyrosequencing reads taken from human stool samples. Gene annotation is based on similiarity to [The SEED Database][4].
-
 ## Requirements
 
 To run these scripts you need:
@@ -73,7 +69,7 @@ If there is a `#` present in the system annotation, the gene counts are overlook
 notice they add up)
 
   
-## Relavent Papers
+## Relevant Papers
 
 Just for starters...
 
